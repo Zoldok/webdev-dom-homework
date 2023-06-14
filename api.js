@@ -1,10 +1,6 @@
-import { formatDate } from "./Date.js";
+// import { formatDate } from "./Date.js";
 import { renderComments, token } from "./render.js";
-// import { commentInputElement} from "./render.js";
-// import {comments} from "./render.js";
-// import { nameInputElement  } from "./render.js";
-// import { comments, nameInputElement } from "./main.js";
-// import { commentInputElement } from "./main.js";
+import { format } from "date-fns"
 
 const host = "https://webdev-hw-api.vercel.app/api/v1/max-kyrtimov/comments";
 const host2 = "https://wedev-api.sky.pro/api/v2/max-kyrtimov12/comments";
@@ -27,9 +23,11 @@ export const getAllComments = (comments) => {
         })
         .then((responseData) => {
             const appComments = responseData.comments.map((comment) => {
+                // console.log(comment);
+                const createDate = format(new Date(comment.date), 'yyy-MM-dd hh.mm.ss');
                 return {
                     name: comment.author.name,
-                    date: formatDate(new Date(comment.date)),
+                    date: createDate,
                     text: comment.text,
                     active: false,
                     like: comment.likes,
